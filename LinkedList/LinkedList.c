@@ -66,6 +66,25 @@ void insertAt(List *list, void *data, size_t index) {
 	insertedNode->next = temp;
 }
 
+void removeValue(List *list, void *data) {
+	if (list->head == NULL) {
+		return;
+	}
+
+	Node* p_temp = list->head;
+	size_t count = 0;
+	while (p_temp->next != NULL) {
+		if (p_temp->data == data) {
+			removeAt(list, count);	
+			p_temp = p_temp->next;
+		} else {
+			count++;
+			p_temp = p_temp->next;
+		}
+	}
+	return;
+}
+
 void removeAt(List *list, size_t index) {
 	if (list->head == NULL) {
 		return;
@@ -90,7 +109,6 @@ void removeAt(List *list, size_t index) {
     p_before_at->next = p_at->next;
     freeNode(p_at);
 }
-
 
 
 void removeFront(List *list) {
@@ -150,4 +168,43 @@ void removeBack(List *list) {
 	p_seclast->next = NULL;
 
 	return;
+}
+
+
+void* getFront(List *list) {
+
+	if (list->head == NULL) {
+		return NULL;
+	}
+	return list->head->data;
+}
+void* getBack(List *list) {
+	if (list->head == NULL) {
+		return NULL;
+	}
+
+	Node* p_traverse = list->head;
+	while (p_traverse->next != NULL) {
+		p_traverse = p_traverse->next;
+	}
+
+	return p_traverse->data;
+}
+void* getAt(List *list, size_t index) {
+	if (list->head == NULL) {
+		return NULL;
+	}
+
+	Node* p_traverse = list->head;
+	size_t compare = 0;
+	while (p_traverse->next != NULL && compare != index) {
+		p_traverse = p_traverse->next;
+		compare++;
+	}
+
+	if (p_traverse == NULL) {
+		return NULL;
+	}
+
+	return p_traverse->data;
 }

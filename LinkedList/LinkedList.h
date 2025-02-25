@@ -16,6 +16,7 @@ typedef struct List {
 } List;
 
 //Initialization
+void failure(void);
 Node* createNode(void *data);
 void freeNode(Node *node);
 

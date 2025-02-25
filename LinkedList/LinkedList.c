@@ -197,14 +197,84 @@ void* getAt(List *list, size_t index) {
 
 	Node* p_traverse = list->head;
 	size_t compare = 0;
-	while (p_traverse->next != NULL && compare != index) {
+	while (p_traverse != NULL && compare != index) {
 		p_traverse = p_traverse->next;
 		compare++;
 	}
 
-	if (p_traverse == NULL) {
-		return NULL;
+	return p_traverse ? p_traverse->data : NULL;
+}
+
+int contains(List *list, void *data) {
+	if (list->head == NULL) {
+		return -1;
 	}
 
-	return p_traverse->data;
+	Node* p_traverse = list->head;
+	while (p_traverse != NULL) {
+		if (p_traverse->data == data) {
+			return 1;
+		}
+		p_traverse = p_traverse->next;
+	}
+	return 0;
+}
+
+int indexOf(List *list, void *data) {
+	if (list->head == NULL) {
+		return -2;
+	}
+
+	Node* p_traverse = list->head;
+	int index = 0;
+	while (p_traverse != NULL) {
+		if (p_traverse->data == data) {
+			return index;
+		}
+		p_traverse = p_traverse->next;
+		index++;
+	}
+	return -1;
+}
+
+int getSize(List *list) {
+	if (list->head == NULL) {
+		return 0;
+	}
+
+	Node* p_traverse = list->head;
+	int index = 0;
+	while (p_traverse != NULL) {
+		p_traverse = p_traverse->next;
+		index++;
+	}
+	return index;
+}
+
+int isEmpty(List *list) {
+	if (list->head == NULL) {
+		return 0;
+	}
+	return 1;
+}
+
+void clear(List *list) {
+	if (list->head == NULL) {
+		return;
+	}
+	if (list->head->next == NULL) {
+		removeFront(list);
+	}
+
+	Node* this_node = list->head;
+	Node* next_node = list->head->next;
+
+	while(this_node != NULL) {
+		freeNode(this_node);
+		this_node = next_node;
+		if (next_node != NULL) {
+			next_node = next_node->next;
+		}
+	}
+	list->head = NULL;
 }

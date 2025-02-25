@@ -38,10 +38,10 @@ void* getAt(List *list, size_t index);
 
 // Search Operations
 int contains(List *list, void *data);
-size_t indexOf(List *list, void *data);
+int indexOf(List *list, void *data);
 
 // Utility Methods
-size_t getSize(List *list);
+int getSize(List *list);
 int isEmpty(List *list);
 void clear(List *list);
 

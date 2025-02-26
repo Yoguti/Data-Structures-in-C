@@ -46,7 +46,7 @@ int isEmpty(List *list);
 void clear(List *list);
 
 // Traversal & Processing
-void traverse(List *list, void (*func)(void*));
+void map(List *list, void* (*func)(void*));
 void reverse(List *list);
 void sort(List *list);
 

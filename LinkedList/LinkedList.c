@@ -278,3 +278,31 @@ void clear(List *list) {
 	}
 	list->head = NULL;
 }
+
+void map(List *list, void* (*func)(void*)) {
+	if (list->head == NULL) {
+		return;
+	}
+	Node* this_node = list->head;
+
+	while(this_node != NULL) {
+		this_node->data = func(this_node->data);
+		this_node = this_node->next;
+	}
+}
+
+void reverse(List *list) {
+	if (list->head == NULL) {
+		return;
+	}
+	if (list->head->next == NULL) {
+		return;
+	}
+	if (list->head->next->next == NULL) {
+		list->head->next->next = list->head;
+		list->head->next = NULL;
+		
+		return;
+	}
+
+}

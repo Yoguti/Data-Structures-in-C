@@ -48,6 +48,5 @@ void clear(List *list);
 // Traversal & Processing
 void map(List *list, void* (*func)(void*));
 void reverse(List *list);
-void sort(List *list);
 
 #endif // LIST_H

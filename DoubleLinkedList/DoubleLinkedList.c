@@ -132,14 +132,64 @@ void removeAt(DList *list, size_t index) {
     }
 
 	Node* n_temp = list->head->next;
-	Node* p_temp = list->head;
+	Node* p_temp = list->head; //p_temp->next has the index
 
 	while(index > 1 && n_temp != NULL) {
 		index--;
 		p_temp = n_temp;
 		n_temp = n_temp->next;
 	}
-	
+
+	if (n_temp == NULL) {return;}
+
+	p_temp->next = n_temp->next;
+	if (n_temp->next) {
+		n_temp->next->prev = p_temp;
+	} else {
+		list->tail = p_temp;
+	}
+	freeNode(n_temp);
+}
+
+void removeValue(DList *list, void *data) {
+	if (list->head == NULL) {
+		return;
+	}
+
+	Node* p_temp = list->head;
+	size_t count = 0;
+	while (p_temp->next != NULL) {
+		if (p_temp->data == data) {
+			removeAt(list, count);	
+			p_temp = p_temp->next;
+		} else {
+			count++;
+			p_temp = p_temp->next;
+		}
+	}
+	return;
+}
+
+void* getFront(DList *list) {
+	return list->head ? list->head->data : NULL;
+}
+
+void* getBack(DList *list) {
+	return list->tail ? list->tail->data : NULL;
+}
+
+void* getAt(DList *list, size_t index) {
+	if (list->head == NULL) {
+		return NULL;
+	}
+
+	Node* p_traverse = list->head;
+	size_t compare = 0;
+	while (p_traverse != NULL && compare != index) {
+		p_traverse = p_traverse->next;
+		compare++;
+	}
+	return p_traverse ? p_traverse->data : NULL;
 }
 
 

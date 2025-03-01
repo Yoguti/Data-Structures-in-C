@@ -122,4 +122,24 @@ void removeBack(DList *list) {
 	return;
 }
 
+void removeAt(DList *list, size_t index) {
+	if (list->head == NULL) { 
+		return;
+	}
+	if (index == 0) {
+        removeFront(list);
+        return;
+    }
+
+	Node* n_temp = list->head->next;
+	Node* p_temp = list->head;
+
+	while(index > 1 && n_temp != NULL) {
+		index--;
+		p_temp = n_temp;
+		n_temp = n_temp->next;
+	}
+	
+}
+
 

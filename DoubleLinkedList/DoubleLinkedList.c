@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <DoubleLinkedList.h>
 
@@ -29,7 +30,9 @@ Node* createNode(void *data, Node *prev, Node *next) {
 void freeNode(Node* node) {
     if (node) {
         free(node);
-    }
+    } else {
+		failure();
+	}
 }
 
 void insertFront(DList *list, void *data) {
@@ -43,6 +46,7 @@ void insertFront(DList *list, void *data) {
 	Node* newHead = createNode(data, NULL, list->head);
 	list->head->prev = newHead;
 	list->head = newHead;
+	list->size++;
 	return;
 }
 
@@ -60,6 +64,8 @@ void insertBack(DList *list, void *data) {
     Node* temp = createNode(data, p_temp, NULL);
     p_temp->next = temp;
     list->tail = temp;
+	list->size++;
+	return;
 }
 
 void insertAt(DList *list, void *data, size_t index) {
@@ -89,6 +95,7 @@ void insertAt(DList *list, void *data, size_t index) {
 		list->tail = p_at;
 	}
 	p_temp->next = p_at;
+	list->size++;
 	return;
 }
 
@@ -101,6 +108,7 @@ void removeFront(DList *list) {
 		list->head = temp_head->next;
 		temp_head->next->prev = NULL;
 	} else { list->head = NULL; }
+	list->size--;
 	freeNode(temp_head);
 }
 
@@ -119,6 +127,7 @@ void removeBack(DList *list) {
 	Node* temp_tail = list->tail;
 	list->tail = temp_tail->prev;
 	freeNode(temp_tail);
+	list->size--;
 	return;
 }
 
@@ -148,6 +157,7 @@ void removeAt(DList *list, size_t index) {
 	} else {
 		list->tail = p_temp;
 	}
+	list->size--;
 	freeNode(n_temp);
 }
 
@@ -192,4 +202,53 @@ void* getAt(DList *list, size_t index) {
 	return p_traverse ? p_traverse->data : NULL;
 }
 
+bool contains(DList *list, void *data) {
+	if (list->head == NULL) {
+		return NULL;
+	}
 
+	Node* p_traverse = list->head;
+	while (p_traverse != NULL) {
+		if (p_traverse->data == data) {return true;}
+		p_traverse = p_traverse->next;
+	}
+	return false;
+}
+
+int indexOf(DList *list, void *data) {
+	if (list->head == NULL) {
+		return -2;
+	}
+	int index = 0;
+	Node* p_traverse = list->head;
+	while (p_traverse != NULL) {
+		if (p_traverse->data == data) {return index;}
+		index++;
+		p_traverse = p_traverse->next;
+	}
+	return -1;
+}
+int getSize(DList *list) {
+	return (int)list->size;
+}
+
+bool isEmpty(DList *list) {
+	return list->head ? false : true;
+}
+
+void clear(DList *list) {
+    if (list->head == NULL) {
+        return;
+    }
+
+    Node* temp = list->head;
+    while (temp != NULL) {
+        Node* next = temp->next;
+        freeNode(temp);
+        temp = next;
+    }
+
+    list->head = NULL;
+    list->tail = NULL;
+    list->size = 0;
+}

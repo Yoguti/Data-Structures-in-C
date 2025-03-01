@@ -39,12 +39,12 @@ void* getBack(DList *list);
 void* getAt(DList *list, size_t index);
 
 // Search Operations
-int contains(DList *list, void *data);
+bool contains(DList *list, void *data);
 int indexOf(DList *list, void *data);
 
 // Utility Methods
 int getSize(DList *list);
-int isEmpty(DList *list);
+bool isEmpty(DList *list);
 void clear(DList *list);
 
 // Traversal & Processing

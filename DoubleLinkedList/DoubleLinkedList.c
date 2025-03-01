@@ -29,7 +29,7 @@ Node* createNode(void *data, Node *prev, Node *next) {
 void freeNode(Node* node) {
     if (node) {
         free(node);
-    } // commit
+    }
 }
 
 void insertFront(DList *list, void *data) {
@@ -91,3 +91,35 @@ void insertAt(DList *list, void *data, size_t index) {
 	p_temp->next = p_at;
 	return;
 }
+
+void removeFront(DList *list) {
+	if (list->head == NULL) { 
+		return;
+	}
+	Node* temp_head = list->head;
+	if (temp_head->next) {
+		list->head = temp_head->next;
+		temp_head->next->prev = NULL;
+	} else { list->head = NULL; }
+	freeNode(temp_head);
+}
+
+
+void removeBack(DList *list) {
+	if (list->head == NULL) { 
+		return;
+	}
+	if (list->head->next == NULL) {
+		Node* temp = list->head;
+		list->head = NULL;
+		list->tail = NULL;
+		freeNode(temp);
+		return;
+	}
+	Node* temp_tail = list->tail;
+	list->tail = temp_tail->prev;
+	freeNode(temp_tail);
+	return;
+}
+
+

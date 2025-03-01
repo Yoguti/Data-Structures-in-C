@@ -252,3 +252,15 @@ void clear(DList *list) {
     list->tail = NULL;
     list->size = 0;
 }
+
+void map(DList *list, void* (*func)(void*)) {
+	if (list->head == NULL) {
+		return;
+	}
+	Node* this_node = list->head;
+
+	while(this_node != NULL) {
+		this_node->data = func(this_node->data);
+		this_node = this_node->next;
+	}
+}

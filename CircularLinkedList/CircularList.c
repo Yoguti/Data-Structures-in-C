@@ -31,9 +31,42 @@ void freeNode(Node *node) {
 }
 
 // Basic Operations
-void insertFront(CList *list, void *data);
-void insertBack(CList *list, void *data);
-void insertAt(CList *list, void *data, size_t index);
+void insertFront(CList *list, void *data) {
+    Node* newNode = createNode(data, NULL);
+
+    if (list->head == NULL) {
+        list->head = newNode;
+        list->tail = newNode;
+        return;
+    }
+
+    Node* temp = list->head;
+    list->head = newNode;
+    newNode->next = temp;
+    list->size++;
+    return;
+}
+
+void insertBack(CList *list, void *data) {
+    if (list->head == NULL) {
+        insertFront(list,data);
+        return;
+    }
+
+    Node* newNode = createNode(data, NULL);
+
+    list->tail->next = newNode;
+    list->tail = newNode;
+    newNode->next = list->head;
+ 
+    list->size++;
+    return;
+
+}
+void insertAt(CList *list, void *data, size_t index) {
+    list->size++;
+    return;
+}
 
 // Deletion Operations
 void removeFront(CList *list);

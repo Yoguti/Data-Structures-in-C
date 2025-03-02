@@ -92,7 +92,22 @@ void insertAt(CList *list, void *data, size_t index) {
 }
 
 // Deletion Operations
-void removeFront(CList *list);
+void removeFront(CList *list) {
+    if (list->head == list->tail) {
+        freeNode(list->head);
+        list->head = list->tail = NULL;
+    } 
+    else { 
+        
+        Node* next_temp = list->head->next;
+        freeNode(list->head);
+        list->head = next_temp;
+        list->tail->next = list->head;
+    }
+
+    list->size--;
+}
+
 void removeBack(CList *list);
 void removeAt(CList *list, size_t index);
 void removeValue(CList *list, void *data);

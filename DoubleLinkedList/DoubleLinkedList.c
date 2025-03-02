@@ -264,3 +264,18 @@ void map(DList *list, void* (*func)(void*)) {
 		this_node = this_node->next;
 	}
 }
+
+Node *reverse(Node *curr) { 
+  
+    if (curr == NULL)
+        return NULL;
+
+    Node *temp = curr->prev;
+    curr->prev = curr->next;
+    curr->next = temp;
+
+    if (curr->prev == NULL)
+        return curr;
+
+    return reverse(curr->prev);
+}

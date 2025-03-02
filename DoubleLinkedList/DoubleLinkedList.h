@@ -49,6 +49,5 @@ void clear(DList *list);
 
 // Traversal & Processing
 void map(DList *list, void* (*func)(void*));
-void reverse(DList *list);
-
+Node *reverse(Node *curr);
 #endif // LIST_H

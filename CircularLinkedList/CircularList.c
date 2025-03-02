@@ -1,26 +1,34 @@
-#ifndef CIRCULARLSIT_H
-#define CIRCULARLIST_H
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <CircularList.h>
 
-#include <stddef.h>
-
-// Node Structure
-typedef struct Node {
-    void* data;
-    Node* prev;
-    Node* next;
-} Node;
-
-// CList structure
-typedef struct CList {
-    Node* head;
-    Node* tail;
-    size_t size;
-} CList;
 
 //Initialization
-void failure(void);
-Node* createNode(void *data, Node *prev, Node *next);
-void freeNode(Node *node);
+void failure(void) {
+    exit(EXIT_FAILURE);
+}
+
+Node* createNode(void *data, Node *next) {
+    Node* newNode = malloc(sizeof(Node));
+    if (!newNode) {
+        failure();
+    }
+    newNode->data = data;
+    if (next) {
+        newNode->next = next;
+    } else {
+        newNode->next = NULL;
+    }
+    return newNode;
+    
+}
+
+void freeNode(Node *node) {
+    if (node) {
+        free(node);
+    } else { failure(); }
+}
 
 // Basic Operations
 void insertFront(CList *list, void *data);
@@ -39,16 +47,15 @@ void* getBack(CList *list);
 void* getAt(CList *list, size_t index);
 
 // Search Operations
-bool contains(CList *list, void *data);
+int contains(CList *list, void *data);
 int indexOf(CList *list, void *data);
 
 // Utility Methods
 int getSize(CList *list);
-bool isEmpty(CList *list);
+int isEmpty(CList *list);
 void clear(CList *list);
 
 // Traversal & Processing
 void map(CList *list, void* (*func)(void*));
-Node *reverse(Node *curr);
+void reverse(CList *list);
 
-#endif // CIRCULARLIST_H

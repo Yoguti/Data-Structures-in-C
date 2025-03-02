@@ -63,9 +63,32 @@ void insertBack(CList *list, void *data) {
     return;
 
 }
+
 void insertAt(CList *list, void *data, size_t index) {
+    if (index > list->size) {
+        failure();
+        return;
+    }
+
+    if (index == 0) {
+        insertFront(list, data);
+        return;
+    }
+    
+    if (index == list->size) { 
+        insertBack(list, data);
+        return;
+    }
+
+    Node* p_before = list->head;
+    for (size_t i = 1; i < index; i++) {  
+        p_before = p_before->next;
+    }
+
+    Node* newNode = createNode(data, p_before->next);
+    p_before->next = newNode;
+
     list->size++;
-    return;
 }
 
 // Deletion Operations

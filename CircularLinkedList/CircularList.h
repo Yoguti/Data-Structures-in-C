@@ -2,6 +2,7 @@
 #define CIRCULARLIST_H
 
 #include <stddef.h>
+#include <stdbool.h>
 
 // Node Structure
 typedef struct Node {
@@ -44,7 +45,7 @@ void* getBack(CList *list);
 void* getAt(CList *list, size_t index);
 
 // Search Operations
-int contains(CList *list, void *data);
+bool contains(CList *list, void *data);
 int indexOf(CList *list, void *data);
 
 // Utility Methods

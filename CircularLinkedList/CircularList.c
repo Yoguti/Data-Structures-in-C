@@ -89,6 +89,7 @@ void insertAt(CList *list, void *data, size_t index) {
     p_before->next = newNode;
 
     list->size++;
+    return;
 }
 
 // Deletion Operations
@@ -108,18 +109,155 @@ void removeFront(CList *list) {
     list->size--;
 }
 
-void removeBack(CList *list);
-void removeAt(CList *list, size_t index);
-void removeValue(CList *list, void *data);
+void removeBack(CList *list) {
+    if (list->head == NULL) {
+        return;
+    }
+    if (list->head == list->tail) {
+        removeFront(list);
+        return;
+    }
+    Node* p_at = list->head->next;
+    Node* p_before = list->head;
+    while (p_at != list->tail) {
+        p_before = p_at;
+        p_at = p_at->next;
+    }
+
+    freeNode(p_at);
+    list->tail = p_before;
+    p_before->next = list->head;
+    
+    list->size--;
+}
+
+void removeAt(CList *list, size_t index) {
+    if (index >= list->size) {
+        failure();
+        return;
+    }
+
+    if (index == 0) {
+        removeFront(list);
+        return;
+    }
+    
+    if (index == list->size - 1) { 
+        removeBack(list);
+        return;
+    }
+
+    Node* p_before = list->head;
+    for (size_t i = 1; i < index; i++) {  
+        p_before = p_before->next;
+    }
+    Node* temp = p_before->next;
+    p_before->next = p_before->next->next;
+    freeNode(temp);
+
+    list->size--;
+}
+
+void removeValue(CList *list, void *data) {
+    if (list->head == NULL) {
+        return;
+    }
+    Node* p_at = list->head;
+    size_t index = 0;
+    if (list->head->data == data)
+    {
+        removeFront(list);
+        return;
+    }
+    if (list->tail->data == data)
+    {
+        removeBack(list);
+        return;
+    }
+    
+   while (p_at != list->tail)
+   {
+    if (p_at->data == data) {
+        removeAt(list,index);
+        return;
+    }
+    p_at = p_at->next;
+    index++;
+    }
+
+    return;
+}
 
 // Access Operations
-void* getFront(CList *list);
-void* getBack(CList *list);
-void* getAt(CList *list, size_t index);
+void* getFront(CList *list) {
+    return list->head ? list->head->data : NULL;
+}
+void* getBack(CList *list) {
+    return list->tail ? list->tail->data : NULL;
+}
+void* getAt(CList *list, size_t index) {
+    if (list->head == NULL || index >= list->size) {
+        return NULL;
+    }
+    
+    Node* p = list->head;
+    size_t current_index = 0;
+
+    do {
+        if (current_index == index) {
+            return p->data; 
+        }
+        p = p->next;
+        current_index++;
+    } while (p != list->head);
+    return NULL; 
+}
+
 
 // Search Operations
-int contains(CList *list, void *data);
-int indexOf(CList *list, void *data);
+bool contains(CList *list, void *data) {
+    if (list->head == NULL)
+    {
+        return;
+    }
+    
+    if (list->head->data == data) {
+        return true;
+    }
+    Node* p = list->head;
+    do
+    {
+        if (p->data == data) {
+            return true; 
+        }
+        p = p->next;
+    } while (p != list->head);
+
+    return false;
+    
+}
+int indexOf(CList *list, void *data) {
+    if (list->head == NULL)
+    {
+        return;
+    }
+    if (list->head->data == data) {
+        return 0;
+    }
+    Node* p = list->head;
+    int index = 0;
+    do
+    {
+        if (p->data == data) {
+            return index; 
+        }
+        p = p->next;
+        index++;
+    } while (p != list->head);
+
+    return -1;
+
+}
 
 // Utility Methods
 int getSize(CList *list);

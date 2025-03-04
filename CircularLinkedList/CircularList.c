@@ -260,11 +260,45 @@ int indexOf(CList *list, void *data) {
 }
 
 // Utility Methods
-int getSize(CList *list);
-int isEmpty(CList *list);
-void clear(CList *list);
+int getSize(CList *list) {
+    return (int)list->size;
+}
+
+bool isEmpty(CList *list) {
+    return list->head ? true : false;
+}
+
+void clear(CList *list) {
+    if (list == NULL || list->tail == NULL) {
+        return;
+    }
+    
+    Node *current = list->head;
+    Node *next;
+    
+    while (current != list->tail) {
+        next = current->next;
+        freeNode(current);
+        current = next;
+    }
+    freeNode(list->tail);
+    list->tail = NULL;
+}
+
 
 // Traversal & Processing
-void map(CList *list, void* (*func)(void*));
+void map(CList *list, void* (*func)(void*)) {
+    if (list->head == NULL)
+    {
+        return;
+    }
+    
+    Node* p = list->head;
+    do
+    {
+        p->data = func(p->data);
+        p = p->next;
+    } while (p != list->head);
+}
 void reverse(CList *list);
 

@@ -50,7 +50,7 @@ int indexOf(CList *list, void *data);
 
 // Utility Methods
 int getSize(CList *list);
-int isEmpty(CList *list);
+bool isEmpty(CList *list);
 void clear(CList *list);
 
 // Traversal & Processing

@@ -22,12 +22,12 @@ void freeNode(Node *node);
 
 // Operations
 
-void push(Stack stack);
-void* pop(Stack stack);
-void* top(Stack stack);
-bool isEmpty(Stack stack);
-void clear(Stack stack);
-int size(Stack stack);
-bool contains(Stack stack);
+void push(Stack *stack, void* data);
+void* pop(Stack *stack);
+void* top(Stack *stack);
+bool isEmpty(Stack *stack);
+void clear(Stack *stack);
+int size(Stack *stack);
+bool contains(Stack *stack);
 
 #endif // STACK_H

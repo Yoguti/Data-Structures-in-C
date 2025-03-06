@@ -22,3 +22,33 @@ void freeNode(Node *node) {
         failure();
     }
 }
+
+void push(Stack *stack, void* data) {
+    if (stack->top == NULL) {
+        Node* newNode = createNode(data, NULL);
+        stack->top = newNode;
+        return;
+    }
+
+    Node* newNode = createNode(data, stack->top);
+    stack->top = newNode;
+    stack->size++;
+    return;
+}
+
+void* pop(Stack *stack) {
+    if (stack->top == NULL) {
+        return NULL;
+    }
+    Node* ref = stack->top->bellow;
+    void* ref_top = stack->top->data;
+
+    freeNode(stack->top);
+    stack->top = ref;
+    stack->size--;
+    return ref_top;
+}
+
+void* top(Stack *stack) {
+    return stack->top ? stack->top->data : NULL;
+}

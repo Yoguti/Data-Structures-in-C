@@ -13,6 +13,7 @@ Node* createNode(void *data, Node* bellow) {
    } else {
     failure();
    }
+   return newNode;
 }
 
 void freeNode(Node *node) {
@@ -51,4 +52,29 @@ void* pop(Stack *stack) {
 
 void* top(Stack *stack) {
     return stack->top ? stack->top->data : NULL;
+}
+
+bool isEmpty(Stack *stack) {
+    return stack->top ? false : true;
+}
+void clear(Stack *stack) {
+    while (stack->top != NULL)
+    {
+        pop(stack);
+    }
+    return;
+}
+int size(Stack *stack) {
+    return (int)stack->size;
+}
+bool contains(Stack *stack, void* data) {
+    Node* p = stack->top;
+    while (p != NULL)
+    {
+        if (p->data == data) {
+            return true;
+        }
+        p = p->bellow;
+    }
+    return false;
 }

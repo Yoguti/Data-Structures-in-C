@@ -300,5 +300,24 @@ void map(CList *list, void* (*func)(void*)) {
         p = p->next;
     } while (p != list->head);
 }
-void reverse(CList *list);
+
+void reverse(CList *list) {
+    if (list->head == NULL || list->head == list->tail) {
+        return;
+    }
+
+    Node* p = list->head;
+    Node* p_next = p->next;
+
+    do {
+        Node* p_nn = p_next->next;
+        p_next->next = p;
+        p = p_next;
+        p_next = p_nn;
+    } while (p != list->tail);
+
+    list->tail = list->head;
+    list->head = p;
+}
+
 
